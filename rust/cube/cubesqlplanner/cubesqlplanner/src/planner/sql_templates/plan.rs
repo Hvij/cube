@@ -788,7 +788,7 @@ impl PlanSqlTemplates {
     pub fn time_in_where(
         &self,
         column: String,
-        values: Vec<String>,
+        values: &[String],
         is_null_check: bool,
         negated: bool,
     ) -> Result<Option<String>, CubeError> {
@@ -896,6 +896,18 @@ impl PlanSqlTemplates {
     pub fn number_param_cast(&self, expr: &str) -> Result<String, CubeError> {
         self.render
             .render_template(&"tesseract/number_param_cast", context! { expr => expr })
+    }
+
+    /// A dialect that cannot compare a time member with a bare string value
+    /// parses the value; the rest compare it as it is.
+    pub fn time_param_cast(&self, expr: &str) -> Result<String, CubeError> {
+        const TEMPLATE_NAME: &str = "tesseract/time_param_cast";
+
+        if !self.render.contains_template(TEMPLATE_NAME) {
+            return Ok(expr.to_string());
+        }
+        self.render
+            .render_template(TEMPLATE_NAME, context! { expr => expr })
     }
 
     pub fn like_escape_char(&self) -> Result<Option<char>, CubeError> {

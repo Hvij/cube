@@ -11,7 +11,7 @@ impl FilterOperationSql for InListOp {
         if self.member_type.as_deref() == Some("time") {
             if let Some(sql) = ctx.plan_templates.time_in_where(
                 ctx.member_sql().to_string(),
-                allocated.clone(),
+                &allocated,
                 need_null_check,
                 self.negated,
             )? {
