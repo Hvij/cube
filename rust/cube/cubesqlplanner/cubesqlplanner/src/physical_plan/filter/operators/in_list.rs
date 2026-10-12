@@ -8,6 +8,17 @@ impl FilterOperationSql for InListOp {
         let need_null_check = if self.negated { !has_null } else { has_null };
         let allocated = ctx.allocate_and_cast_values(&self.values, &self.member_type)?;
 
+        if self.member_type.as_deref() == Some("time") {
+            if let Some(sql) = ctx.plan_templates.time_in_where(
+                ctx.member_sql().to_string(),
+                allocated.clone(),
+                need_null_check,
+                self.negated,
+            )? {
+                return Ok(sql);
+            }
+        }
+
         if self.negated {
             ctx.plan_templates.not_in_where(
                 ctx.member_sql().to_string(),
