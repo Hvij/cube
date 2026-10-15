@@ -12,6 +12,9 @@ export class QueryFactory {
     if (!QueryClass) {
       throw new Error(`Undefined dbType or dialectClass for '${cube}'`);
     }
-    return new QueryClass(compilers, queryOptions);
+    return new QueryClass(compilers, {
+      ...queryOptions,
+      dataSource: compilers.cubeEvaluator.cubeFromPath(cube).dataSource ?? 'default',
+    });
   }
 }
