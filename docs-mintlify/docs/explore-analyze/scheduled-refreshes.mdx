@@ -269,12 +269,10 @@ see every scheduled refresh in the deployment. Each row shows:
 Use the search box above the list to find a schedule by its dashboard title or
 its schedule text, such as "Weekly" or "UTC".
 
-Click the **Dashboard** or **Schedule** column header to sort the list. The
-**Schedule** column sorts by when each schedule runs, not alphabetically:
-Hourly, then Daily, Weekly, Monthly, and custom cron expressions last. Within
-one frequency it sorts by day (Monday first, day 1 before day 15), then by time
-of day, so "Daily at 9:00 AM UTC" comes before "Daily at 10:00 AM UTC" and
-"Daily at 1:00 PM UTC", then by timezone. Click it again to reverse the order.
+Click the **Dashboard** or **Schedule** column header to sort the list; click it
+again to reverse the order. **Schedule** sorts by frequency (Hourly, Daily,
+Weekly, Monthly, then custom cron expressions), then by day, then by the time of
+day as written in each schedule's own timezone, and last by timezone.
 
 What a row offers depends on your permission on its workbook:
 
